@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-basics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Myrosya-fsd/nodejs-basics.git"
+  },
+  "keywords": [],
+  "author": "Myroslava Havrylchuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Myrosya-fsd/nodejs-basics/issues"
+  },
+  "homepage": "https://github.com/Myrosya-fsd/nodejs-basics#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "nodemon": "^3.1.10"
+  }
+}
