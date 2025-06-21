@@ -29,7 +29,6 @@ export const getAllContacts = async ({
     data: contacts,
     ...paginationData,
   };
-};
 
 export const getContactById = async (contactId) => {
   const contact = await ContactsCollection.findById(contactId);
