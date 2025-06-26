@@ -3,3 +3,8 @@ https://nodejs-hw-mongodb-qzaz.onrender.com/contacts
 
 Node.JS 3.0: Homework-hw3-crud
 https://nodejs-hw-mongodb-1-4ll2.onrender.com
+
+Node.JS 4.0: Homework-hw4-validation
+https://nodejs-hw4-validation-wn01.onrender.com/contacts
+
+Node.JS 5.0: Homework-hw5-auth
