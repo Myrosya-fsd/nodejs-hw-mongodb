@@ -13,7 +13,7 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactsCollection.find( userId );
+  const contactsQuery = ContactsCollection.find(userId);
 
   if (filter.type !== undefined) {
     contactsQuery.where('contactType').equals(filter.type);
@@ -25,7 +25,8 @@ export const getAllContacts = async ({
 
   const [contactsCount, contacts] = await Promise.all([
     ContactsCollection.find().merge(contactsQuery).countDocuments(),
-    contactsQuery
+    ContactsCollection.find()
+      .merge(contactsQuery)
       .skip(skip)
       .limit(limit)
       .sort({ [sortBy]: sortOrder })
@@ -46,8 +47,20 @@ export const getContactById = async (contactId, userId) => {
 };
 
 export const createContact = async (userId, body) => {
-  const contact = await ContactsCollection.create(userId, body);
-  return contact;
+  try {
+    const contact = await ContactsCollection.create({ userId, ...body });
+    return contact;
+  } catch (error) {
+    console.error(error.message);
+
+    if (error.name === 'ValidationError') {
+      const message = Object.values(error?.errors)
+        .map((err) => err.message)
+        .join(', ');
+
+      throw createHttpError(400, `Validation Error: ${message}`);
+    }
+  }
 };
 
 export const updateContact = async (contactId, userId, body, options = {}) => {
