@@ -3,8 +3,8 @@ import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
 
 export const getAllContacts = async ({
-  userId,
   page = 1,
+  userId,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
