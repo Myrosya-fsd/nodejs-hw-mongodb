@@ -7,7 +7,6 @@ const contactsSchema = new Schema(
       ref: 'users',
       required: true,
     },
-
     name: {
       type: String,
       required: true,
