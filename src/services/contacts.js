@@ -1,8 +1,10 @@
+import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
 
 export const getAllContacts = async ({
+  userId,
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
@@ -12,7 +14,7 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = ContactsCollection.find();
+  const contactsQuery = ContactsCollection.find({ userId });
 
   if (filter.type !== undefined) {
     contactsQuery.where('contactType').equals(filter.type);
@@ -24,8 +26,7 @@ export const getAllContacts = async ({
 
   const [contactsCount, contacts] = await Promise.all([
     ContactsCollection.find().merge(contactsQuery).countDocuments(),
-    ContactsCollection.find()
-      .merge(contactsQuery)
+    contactsQuery
       .skip(skip)
       .limit(limit)
       .sort({ [sortBy]: sortOrder })
@@ -40,8 +41,8 @@ export const getAllContacts = async ({
   };
 };
 
-export const getContactById = async (contactId) => {
-  const contact = await ContactsCollection.findOne(contactId);
+export const getContactById = async (userId, contactId) => {
+  const contact = await ContactsCollection.findOne({ _id: contactId, userId });
   return contact;
 };
 
@@ -62,9 +63,9 @@ export const createContact = async (userId, body) => {
   }
 };
 
-export const updateContact = async (contactId, body, options = {}) => {
+export const updateContact = async (userId, contactId, body, options = {}) => {
   const rawResult = await ContactsCollection.findOneAndUpdate(
-    { _id: contactId },
+    { _id: contactId, userId },
     body,
     {
       new: true,
@@ -81,9 +82,10 @@ export const updateContact = async (contactId, body, options = {}) => {
   };
 };
 
-export const deleteContact = async (contactId) => {
+export const deleteContact = async (userId, contactId) => {
   const result = await ContactsCollection.findOneAndDelete({
     _id: contactId,
+    userId,
   });
   return result;
 };
