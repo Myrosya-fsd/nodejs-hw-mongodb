@@ -1,8 +1,13 @@
-import { registerUser } from '../services/auth.js';
-import { loginUser } from '../services/auth.js';
 import { ONE_DAY } from '../constants/index.js';
-import { logoutUser } from '../services/auth.js';
-import { refreshUsersSession } from '../services/auth.js';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+  refreshUsersSession,
+  requestResetToken,
+  resetPassword,
+} from '../services/auth.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -66,4 +71,54 @@ export const refreshUserSessionController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+export const requestResetEmailController = async (req, res) => {
+  await requestResetToken(req.body.email);
+
+  res.json({
+    status: 200,
+    message: 'Reset password email has been successfully sent.',
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  await resetPassword(req.body);
+
+  res.json({
+    status: 200,
+    message: 'Password has been successfully reset.',
+    data: {},
+  });
+};
+
+export const patchUserController = async (req, res, next) => {
+  try {
+    const userId = req.user._id;
+    const updates = req.body;
+    const photo = req.file;
+
+    let photoUrl = null;
+    if (photo) {
+      // припускаємо, що є Cloudinary або локальне збереження
+      //photoUrl = await saveFileToCloudinary(photo);
+      const APP_DOMAIN = getEnvVar('APP_DOMAIN');
+      photoUrl = `${APP_DOMAIN}/auth/uploads/${photo.filename}`;
+    }
+
+    const updatedUser = {
+      _id: userId,
+      ...updates,
+      ...(photoUrl ? { photo: photoUrl } : {}),
+    };
+
+    res.status(200).json({
+      status: 200,
+      message: 'User updated successfully',
+      data: updatedUser,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
