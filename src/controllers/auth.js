@@ -8,6 +8,7 @@ import {
   resetPassword,
 } from '../services/auth.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -100,11 +101,14 @@ export const patchUserController = async (req, res, next) => {
     const photo = req.file;
 
     let photoUrl = null;
+
     if (photo) {
-      // припускаємо, що є Cloudinary або локальне збереження
-      //photoUrl = await saveFileToCloudinary(photo);
-      const APP_DOMAIN = getEnvVar('APP_DOMAIN');
-      photoUrl = `${APP_DOMAIN}/auth/uploads/${photo.filename}`;
+      if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
+        photoUrl = await saveFileToCloudinary(photo);
+      } else {
+        const APP_DOMAIN = getEnvVar('APP_DOMAIN');
+        photoUrl = `${APP_DOMAIN}/uploads/${photo.filename}`;
+      }
     }
 
     const updatedUser = {
