@@ -11,6 +11,7 @@ export const saveFileToUploadDir = async (file) => {
     );
 
     const url = `${getEnvVar('APP_DOMAIN')}/uploads/${file.filename}`;
+
     return url;
   } catch (err) {
     console.error(err);
