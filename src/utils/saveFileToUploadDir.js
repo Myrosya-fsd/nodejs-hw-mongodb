@@ -10,7 +10,8 @@ export const saveFileToUploadDir = async (file) => {
       path.join(UPLOAD_DIR, file.filename),
     );
 
-    const url = `${getEnvVar('APP_DOMAIN')}/auth/uploads/${file.filename}`;
+    const url = `${getEnvVar('APP_DOMAIN')}/uploads/${file.filename}`;
+
     return url;
   } catch (err) {
     console.error(err);
