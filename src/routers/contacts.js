@@ -4,7 +4,7 @@ import {
   deleteContactByIdController,
   getContactByIdController,
   getContactsController,
-  patchContactController,
+  updateContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
@@ -36,7 +36,7 @@ router.patch(
   isValidId,
   upload.single('photo'),
   validateBody(updateContactSchema),
-  ctrlWrapper(patchContactController),
+  ctrlWrapper(updateContactController),
 );
 
 router.delete(

@@ -67,7 +67,7 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const patchContactController = async (req, res, next) => {
+export const updateContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
   const photo = req.file;
@@ -86,6 +86,8 @@ export const patchContactController = async (req, res, next) => {
     ...req.body,
     photo: photoUrl,
   });
+
+  console.log('Results: ', result);
 
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
