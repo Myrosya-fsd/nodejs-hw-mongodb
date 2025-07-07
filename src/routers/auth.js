@@ -15,9 +15,6 @@ import {
   requestResetEmailController,
   resetPasswordController,
 } from '../controllers/auth.js';
-import { patchUserController } from '../controllers/auth.js';
-import { authenticate } from '../middlewares/authenticate.js';
-import { upload } from '../middlewares/multer.js';
 
 const router = Router();
 
@@ -47,13 +44,6 @@ router.post(
   '/reset-password',
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
-);
-
-router.patch(
-  '/patch',
-  authenticate,
-  upload.single('photo'),
-  patchUserController,
 );
 
 export default router;

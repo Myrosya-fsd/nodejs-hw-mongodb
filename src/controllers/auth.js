@@ -7,8 +7,6 @@ import {
   requestResetToken,
   resetPassword,
 } from '../services/auth.js';
-import { getEnvVar } from '../utils/getEnvVar.js';
-import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
@@ -92,37 +90,4 @@ export const resetPasswordController = async (req, res) => {
     message: 'Password has been successfully reset.',
     data: {},
   });
-};
-
-export const patchUserController = async (req, res, next) => {
-  try {
-    const userId = req.user._id;
-    const updates = req.body;
-    const photo = req.file;
-
-    let photoUrl = null;
-
-    if (photo) {
-      if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
-        photoUrl = await saveFileToCloudinary(photo);
-      } else {
-        const APP_DOMAIN = getEnvVar('APP_DOMAIN');
-        photoUrl = `${APP_DOMAIN}/uploads/${photo.filename}`;
-      }
-    }
-
-    const updatedUser = {
-      _id: userId,
-      ...updates,
-      ...(photoUrl ? { photo: photoUrl } : {}),
-    };
-
-    res.status(200).json({
-      status: 200,
-      message: 'User updated successfully',
-      data: updatedUser,
-    });
-  } catch (err) {
-    next(err);
-  }
 };
