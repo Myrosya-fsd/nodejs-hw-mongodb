@@ -55,7 +55,8 @@ export const createContactController = async (req, res) => {
 
   const photoUrl = photo ? await saveFileToCloudinary(photo) : null;
 
-  const contact = await createContact(req.user._id, req.body, {
+  const contact = await createContact(req.user._id, {
+    ...req.body,
     photo: photoUrl,
   });
 
@@ -81,7 +82,8 @@ export const patchContactController = async (req, res, next) => {
     }
   }
 
-  const result = await updateContact(req.user._id, contactId, req.body, {
+  const result = await updateContact(req.user._id, contactId, {
+    ...req.body,
     photo: photoUrl,
   });
 
