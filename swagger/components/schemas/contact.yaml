@@ -1,0 +1,36 @@
+type: object
+required:
+  - _id
+  - userId
+  - name
+  - phoneNumber
+  - contactType
+properties:
+  _id:
+    description: 'Contact`s id'
+    type: string
+    example: '6841d504faf26368c8811992'
+  userId:
+    description: 'This field represents the user ID that links the contact to a specific user'
+    type: string
+    example: '6841d504faf26368c8811992'
+  name:
+    description: 'Contact`s Name'
+    type: string
+    example: 'Yulia Shevchenko'
+  phoneNumber:
+    description: 'Contact`s phone number'
+    type: string
+    example: '+380000000001'
+  email:
+    description: 'Contact`s email'
+    type: string
+    example: 'example@mail.com'
+  contactType:
+    description: 'Contact`s type'
+    type: string
+    enum: ['work', 'home', 'personal']
+  photo:
+    description: 'Link to contact`s photo'
+    type: string
+    example: '//res.cloudinary.com/uqwgdu/image/upload/image.png'
