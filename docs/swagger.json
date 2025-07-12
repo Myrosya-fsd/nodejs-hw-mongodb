@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-6-0.onrender.com"
+      "url": "https://nodejs-hw-mongodb-7-s2kq.onrender.com"
     }
   ],
   "tags": [
@@ -184,6 +184,11 @@
                     "description": "Contact`s email",
                     "type": "string",
                     "example": "example@mail.com"
+                  },
+                  "isFavourite": {
+                    "description": "Whether the contact is marked as a favorite",
+                    "type": "boolean",
+                    "example": false
                   },
                   "contactType": {
                     "description": "Contact`s type",
@@ -367,6 +372,11 @@
                     "type": "string",
                     "example": "example@mail.com"
                   },
+                  "isFavourite": {
+                    "description": "Whether the contact is marked as a favorite",
+                    "type": "boolean",
+                    "example": false
+                  },
                   "contactType": {
                     "description": "Contact`s type",
                     "type": "string",
@@ -440,7 +450,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Successfully deleted."
           },
           "401": {

@@ -13,4 +13,5 @@ https://nodejs-hw-mongodb-3-r1ha.onrender.com
 Node.JS 6.0: Homework-hw6-email-and-images
 https://nodejs-hw-mongodb-6-0.onrender.com
 
-Node.JS 7.0: Homework-hw7-
+Node.JS 7.0: Homework-hw7-swagger
+https://nodejs-hw-mongodb-7-s2kq.onrender.com
